@@ -16,7 +16,7 @@ export const register = async (req, res) => {
     const { username, email, password, phone } = req.body;
     const userExist = await User.findOne({ email });
     if (userExist) {
-      return res.status(400).send({ message: "User already exist" });
+      return res.status(400).json({ message: "User already exist" });
     }
 
     //Salt makes the same password look different every time or extra random value added to your password to protect from the hacker before hashing(encrypting). same logic can write in model file to avoid the mistake like to forget write password: hashedPassword,so that why pre middleware is used that automatically hash the password before saving the data in database safer way to do it
@@ -32,15 +32,18 @@ export const register = async (req, res) => {
     });
 
     // res.status(200).send("Hello Register!");
-    res.status(200).send({
+    res.status(200).json({
       message: "Register successfully",
       token: await createUser.generateAuthToken(),
-      user_id: createUser._id.toString,
+      user_id: createUser._id.toString(),
     });
     console.log(req.body);
   } catch (error) {
     // next(error);
-    res.status(500).send(error.message);
+
+    res.status(500).json({
+      message: error.message || "Internal server error",
+    });
   }
 };
 
