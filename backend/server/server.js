@@ -12,7 +12,7 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:5173", // local
-    "https://ecoomerce-website-427e.vercel.app/", // production
+    "https://ecoomerce-website-427e.vercel.app", // production
   ],
 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
